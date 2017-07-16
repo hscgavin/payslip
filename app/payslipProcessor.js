@@ -1,5 +1,5 @@
 const moment = require('moment')
-const taxRateTable = require('./taxRateTable')
+const helper = require('./helper')
 
 
 const months = [
@@ -21,27 +21,18 @@ const months = [
 const payslipProcessor = {}
 
 payslipProcessor.getIncomeTax = (salary, startDate) => {
-  const momentDate = moment(startDate)
-  // if month is July or over, tax year + 1 e.g 2017-07: tax year should be 2018
-  let taxYear = momentDate.year()
-  if (momentDate.month() >= 6) {
-    taxYear = taxYear + 1
-  }
-  // Check if tax rate for this year exists
-  const taxRates = taxRateTable[taxYear.toString()]
+  const taxRates = helper.getTaxRateByTaxYear(startDate)
+  let result = 0
+  // taxRates should be true as all data has been validated
+  // Defensive programming
   if (taxRates) {
-    let result = 0
     taxRates.forEach((rule) => {
       if (salary <= rule.max && salary > rule.min) {
         result = Math.round((rule.fixed + (salary - rule.min) * rule.rate) /12)
       }
     })
-    return result
-  } else {
-    console.log(`Tax rates for ${taxYear} tax year doesn't exist, please try again after update ${taxYear} taxRateTable `)
-    process.exit(1)
   }
-
+  return result
 }
 
 payslipProcessor.getGrossIncome = (salary) => (
