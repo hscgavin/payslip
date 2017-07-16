@@ -61,7 +61,7 @@ inputValidationEngine.checkStartDate = function (startDate, callback) {
     // check if there is tax rate info for this tax year on tax rate table
     const taxRates = helper.getTaxRateByTaxYear(startDate)
     if (!taxRates) {
-      errorMsg = `Sorry, tax rates for tax year ${taxYear} are not available`
+      errorMsg = `Sorry, tax rates for tax year ${helper.getTaxYear(startDate)} are not available`
     }
   }
   callback(errorMsg)
