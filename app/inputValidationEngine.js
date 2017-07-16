@@ -6,6 +6,8 @@
  */
 
 const moment = require('moment')
+const helper = require('./helper')
+const taxRateTable = require('./taxRateTable')
 
 const inputValidationEngine = {}
 
@@ -52,10 +54,16 @@ inputValidationEngine.checkSuperRate = function (superRate, callback) {
   callback(errorMsg)
 }
 
-inputValidationEngine.checkStartDate = function (date, callback) {
+inputValidationEngine.checkStartDate = function (startDate, callback) {
   let errorMsg = null
-  if (!moment(date, ['YYYY-MM-DD'], true).isValid()) {
+  if (!moment(startDate, ['YYYY-MM-DD'], true).isValid()) {
     errorMsg = 'Please provide a correct date with format YYYY-MM-DD'
+  } else {
+    // check if there is tax rate info for this tax year on tax rate table
+    const taxYear = helper.getTaxYear(startDate).t
+    if (!taxRateTable[taxYear]) {
+      errorMsg = `Sorry, tax rates for tax year ${taxYear} are not available now`
+    }
   }
   callback(errorMsg)
 }
