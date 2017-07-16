@@ -1,3 +1,26 @@
+##Assumptions
+* The month of the start date will be the payment month (similar to employment hero), ignore the working days (need to parse the working days)
+* Start date format YYYY-MM-DD (make more sense), instead of `March 01 - March 31`
+* Salary should be integer
+
+##Installation
+1. install latest node.js
+2. run `npm install`
+
+## Run
+manually input
+```shell
+cd payslip
+node app/payslip.js Gavin He 60000 9% 2016-05-01
+```
+or csv input
+
+```shell
+cd payslip
+node app/payslip.js input.csv
+```
+
+
 When I input the employee's details: first name, last name, annual salary(positive integer) and super rate(0% - 50% inclusive), payment start date, the program should generate payslip information with name, pay period,  gross income, income tax, net income and super.
 
 The calculation details will be the following:
