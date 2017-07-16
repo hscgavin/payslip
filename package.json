@@ -4,7 +4,7 @@
   "description": "payslip",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "./node_modules/.bin/jasmine-node spec"
   },
   "author": "Gavin He",
   "license": "ISC",
