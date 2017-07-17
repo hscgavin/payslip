@@ -1,64 +1,114 @@
-##Assumptions
-* The month of the start date will be the payment month (similar to employment hero), ignore the working days (need to parse the working days)
-* Start date format YYYY-MM-DD (make more sense), instead of `March 01 - March 31`
-* Salary should be integer
+# Payslip
 
-##Installation
-1. install latest node.js
-2. run `npm install`
+This is a program that generate employee monthly payslip when input the employee's details: first name, last name, annual salary(positive integer) and super rate(0% - 50% inclusive), payment start date
 
-## Run
-manually input
-```shell
-cd payslip
-node app/payslip.js Gavin He 60000 9% 2016-05-01
-```
-or csv input
-
-```shell
-cd payslip
-node app/payslip.js input.csv
-```
-
-
-When I input the employee's details: first name, last name, annual salary(positive integer) and super rate(0% - 50% inclusive), payment start date, the program should generate payslip information with name, pay period,  gross income, income tax, net income and super.
 
 The calculation details will be the following:
-•       pay period = per calendar month
-•       gross income = annual salary / 12 months
-•       income tax = based on the tax table provide below
-•       net income = gross income - income tax
-•       super = gross income x super rate
+<ul>
+<li>pay period = per calendar month</li>
+<li>gross income = annual salary / 12 months</li>
+<li>income tax = based on the tax table provide below</li>
+<li>net income = gross income - income tax</li>
+<li>super = gross income x super rate</li>
+</ul>
 
 Notes: All calculation results should be rounded to the whole dollar. If >= 50 cents round up to the next dollar increment, otherwise round down.
 
 
-The following rates for 2012-13 apply from 1 July 2012.
 
-Taxable income   Tax on this income
-0 - $18,200     Nil
-$18,201 - $37,000       19c for each $1 over $18,200
-$37,001 - $80,000       $3,572 plus 32.5c for each $1 over $37,000
-$80,001 - $180,000      $17,547 plus 37c for each $1 over $80,000
-$180,001 and over       $54,547 plus 45c for each $1 over $180,000
+## Assumptions
+* The month of the start date will be the payment month (similar to employment hero), ignore how many working days for simplicity.
+* Start date format YYYY-MM-DD (make more sense), instead of `March 01 - March 31`
+* Salary should be integer and > = 0
+* Input csv should contain headers: firstName,lastName,annualSalary,superRate,paymentStartDate
+* If csv row data failed on validation, write error msg to output.csv
 
-The tax table is from ATO:  https://www.ato.gov.au/rates/individual-income-tax-rates/
+## Installation
+1. install latest node.js
+2. `cd payslip`
+3. run `npm install`
+
+## Usage
+
+### manually input
+```shell
+cd payslip
+node app/app.js Gavin He 60000 9% 2016-05-01
+```
+### csv input
+
+```shell
+cd payslip
+node app/app.js csv/input.csv
+```
+### run unit tests
+```shell
+cd payslip
+npm test
+```
+## Input csv file example
+```csv
+firstName,lastName,annualSalary,superRate,paymentStartDate
+David,Rudd,60050,9%,2013-03-01
+Ryan,Chen,120000,10%,2013-03-01
+Gavin,He,1200000,%,2013-03-01
+```
+
+## Output csv file example
+```csv
+firstName,lastName,paymentMonth,grossIncome,incomeTax,netIncome,super
+David,Rudd,March,5004,922,4082,450
+Ryan,Chen,March,10000,2696,7304,1000
+Super Rate should be within 0 and 50% (e.g. 9%),,,,,,
+```
 
 
-Example Data
-Employee annual salary is 60,050, super rate is 9%, how much will this employee be paid for the month of March ?
-•       pay period = Month of March (01 March to 31 March)
-•       gross income = 60,050 / 12 = 5,004.16666667 (round down) = 5,004
-•       income tax = (3,572 + (60,050 - 37,000) x 0.325) / 12  = 921.9375 (round up) = 922
-•       net income = 5,004 - 922 = 4,082
-•       super = 5,004 x 9% = 450.36 (round down) = 450
+## Console output example
+`node app/app.js Gavin He 56000 9% 2012-07-01
+`
+```
 
-Here is the csv input and output format we provide. (But feel free to use any format you want)
+Pay Slip Details:
+Name: Gavin He
+Payment Month : July
+Gross income : 4667
+Income tax : 812
+Net income : 3855
+Super : 420
 
-Input (first name, last name, annual salary, super rate (%), payment start date):
-David,Rudd,60050,9%,01 March – 31 March
-Ryan,Chen,120000,10%,01 March – 31 March
+```
 
-Output (name, pay period, gross income, income tax, net income, super):
-David Rudd,01 March – 31 March,5004,922,4082,450
-Ryan Chen,01 March – 31 March,10000,2696,7304,1000
+### Tax rate table 
+Available for 2013, 2017, 2018
+
+```javascript
+
+const taxRateTable = {
+  "2018": [
+    {max: 18200, min: 0, fixed: 0, rate: 0},
+    {max: 37000, min: 18200, fixed: 0, rate: 0.19},
+    {max: 87000, min: 37000, fixed: 3572, rate: 0.325},
+    {max: 180000, min: 87000, fixed: 19822, rate: 0.37},
+    {max: 9999999999, min: 180000, fixed: 54232, rate: 0.45}
+  ],
+  "2017": [
+    {max: 18200, min: 0, fixed: 0, rate: 0},
+    {max: 37000, min: 18200, fixed: 0, rate: 0.19},
+    {max: 87000, min: 37000, fixed: 3572, rate: 0.325},
+    {max: 180000, min: 87000, fixed: 19822, rate: 0.37},
+    {max: 9999999999, min: 180000, fixed: 54232, rate: 0.45}
+  ],
+  "2013": [
+    {max: 18200, min: 0, fixed: 0, rate: 0},
+    {max: 37000, min: 18200, fixed: 0, rate: 0.19},
+    {max: 80000, min: 37000, fixed: 3572, rate: 0.325},
+    {max: 180000, min: 80000, fixed: 17547, rate: 0.37},
+    {max: 9999999999, min: 180000, fixed: 54547, rate: 0.45}
+  ]
+}
+```
+
+### Libs
+1. `fast-csv` for parsing csv data
+2. `moment` for parsing date
+
