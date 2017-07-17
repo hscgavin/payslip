@@ -72,6 +72,7 @@ if (args && args.length === 5) {
     const handlePayslipInfo = (payslipInfo) => {
       return payslipInfo
     }
+    const writableStream = fs.createWriteStream("csv/output.csv", {encoding: "utf8"})
     csv
       .fromPath(args[0], {headers: true})
       .transform(function (obj) {
@@ -99,7 +100,11 @@ if (args && args.length === 5) {
         return payslipInfo
       })
       .pipe(csv.createWriteStream({headers: true}))
-      .pipe(fs.createWriteStream("csv/output.csv", {encoding: "utf8"}));
+      .pipe(writableStream)
+
+    writableStream.on("finish", function(){
+      console.log("Write to output.csv DONE!")
+    })
 
   } else {
     console.log(`Could not find the file ${args[0]}, please add the file to csv folder and try again`)
