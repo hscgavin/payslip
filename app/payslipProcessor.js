@@ -26,11 +26,12 @@ payslipProcessor.getIncomeTax = (salary, startDate) => {
   // taxRates should be true as all data has been validated
   // Defensive programming
   if (taxRates) {
-    taxRates.forEach((rule) => {
-      if (salary <= rule.max && salary > rule.min) {
-        result = Math.round((rule.fixed + (salary - rule.min) * rule.rate) /12)
+    for (let i = 0; i < taxRates.length; i++) {
+      if(salary <= taxRates[i].max && salary > taxRates[i].min) {
+        result = Math.round((taxRates[i].fixed + (salary - taxRates[i].min) * taxRates[i].rate) /12)
+        break
       }
-    })
+    }
   }
   return result
 }
