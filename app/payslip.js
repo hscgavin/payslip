@@ -20,7 +20,7 @@ Payslip.prototype.getPayslip = function() {
     grossIncome: grossIncome,
     incomeTax: incomeTax,
     netIncome: payslipProcessor.getNetIncome(grossIncome, incomeTax),
-    super: this.superRate
+    super: payslipProcessor.getSuper(grossIncome, this.superRate)
   }
 }
 
