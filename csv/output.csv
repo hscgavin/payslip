@@ -1,0 +1,4 @@
+firstName,lastName,paymentMonth,grossIncome,incomeTax,netIncome,super
+David,Rudd,March,5004,922,4082,450
+Ryan,Chen,March,10000,2696,7304,1000
+Super Rate should be within 0 and 50% (e.g. 9%),,,,,,

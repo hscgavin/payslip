@@ -9,6 +9,7 @@
   "author": "Gavin He",
   "license": "ISC",
   "dependencies": {
+    "fast-csv": "^2.4.0",
     "moment": "^2.18.1"
   },
   "devDependencies": {
