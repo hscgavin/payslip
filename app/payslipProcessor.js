@@ -18,9 +18,10 @@ const months = [
 ]
 
 
-const payslipProcessor = {}
+const PayslipProcessor = function () {}
 
-payslipProcessor.getIncomeTax = (salary, startDate) => {
+
+PayslipProcessor.prototype.getIncomeTax = (salary, startDate) => {
   const taxRates = helper.getTaxRateByTaxYear(startDate)
   let result = 0
   // taxRates should be true as all data has been validated
@@ -36,21 +37,21 @@ payslipProcessor.getIncomeTax = (salary, startDate) => {
   return result
 }
 
-payslipProcessor.getGrossIncome = (salary) => (
+PayslipProcessor.prototype.getGrossIncome = (salary) => (
   Math.round(parseInt(salary, 10) /12)
 )
 
-payslipProcessor.getNetIncome = (grossIncome, incomeTax) => (
+PayslipProcessor.prototype.getNetIncome = (grossIncome, incomeTax) => (
   Math.round(grossIncome - incomeTax)
 )
 
-payslipProcessor.getSuper = (grossIncome, superRate) => {
+PayslipProcessor.prototype.getSuper = (grossIncome, superRate) => {
   const rate = parseFloat(superRate.split('%')[0])/100
   return Math.round(grossIncome * rate)
 }
 
-payslipProcessor.getPaymentMonth = (startdate) => (
+PayslipProcessor.prototype.getPaymentMonth = (startdate) => (
   months[moment(startdate).month()]
 )
 
-module.exports = payslipProcessor
+module.exports = PayslipProcessor
