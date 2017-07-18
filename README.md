@@ -70,11 +70,11 @@ Super Rate should be within 0 and 50% (e.g. 9%),,,,,,
 
 Pay Slip Details:
 Name: Gavin He
-Payment Month : July
-Gross income : 4667
-Income tax : 812
-Net income : 3855
-Super : 420
+Payment Month: July
+Gross income: 4667
+Income tax: 812
+Net income: 3855
+Super: 420
 
 ```
 

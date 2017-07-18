@@ -21,7 +21,7 @@ inputValidationEngine.checkName = function (name, callback) {
   const regex = /^[A-Za-z]+$/
   let errorMsg = null
   if(!regex.test(name)) {
-    errorMsg = 'name should be characters only'
+    errorMsg = 'Name should be characters only'
   }
   callback(errorMsg)
 }
@@ -31,7 +31,7 @@ inputValidationEngine.checkSalary = function (salary, callback) {
   const s = parseInt(salary, 10)
   let errorMsg = null
   if (s != salary || s < DEFAULTSCHEMA.minsalary) {
-    errorMsg = `salary must be greater than or equal to ${DEFAULTSCHEMA.minsalary} and should be integer`
+    errorMsg = `Salary must be greater than or equal to ${DEFAULTSCHEMA.minsalary} and should be integer`
   }
   callback(errorMsg)
 }

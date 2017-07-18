@@ -29,7 +29,7 @@ PayslipProcessor.prototype.getIncomeTax = (salary, startDate) => {
   if (taxRates) {
     for (let i = 0; i < taxRates.length; i++) {
       if(salary <= taxRates[i].max && salary > taxRates[i].min) {
-        result = Math.round((taxRates[i].fixed + (salary - taxRates[i].min) * taxRates[i].rate) /12)
+        result = Math.round((taxRates[i].fixed + (salary - taxRates[i].min) * taxRates[i].rate) / 12)
         break
       }
     }
@@ -38,7 +38,7 @@ PayslipProcessor.prototype.getIncomeTax = (salary, startDate) => {
 }
 
 PayslipProcessor.prototype.getGrossIncome = (salary) => (
-  Math.round(parseInt(salary, 10) /12)
+  Math.round(parseInt(salary, 10) / 12)
 )
 
 PayslipProcessor.prototype.getNetIncome = (grossIncome, incomeTax) => (
@@ -46,7 +46,7 @@ PayslipProcessor.prototype.getNetIncome = (grossIncome, incomeTax) => (
 )
 
 PayslipProcessor.prototype.getSuper = (grossIncome, superRate) => {
-  const rate = parseFloat(superRate.split('%')[0])/100
+  const rate = parseFloat(superRate.split('%')[0]) / 100
   return Math.round(grossIncome * rate)
 }
 

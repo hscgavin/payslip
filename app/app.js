@@ -47,11 +47,11 @@ if (args && args.length === 5) {
     console.log('------------------------------------')
     console.log('Pay Slip Details:')
     console.log(`Name: ${payslipInfo.firstName} ${payslipInfo.lastName}`)
-    console.log(`Payment Month : ${payslipInfo.paymentMonth}`)
-    console.log(`Gross income : ${payslipInfo.grossIncome}`);
-    console.log(`Income tax : ${payslipInfo.incomeTax}`);
-    console.log(`Net income : ${payslipInfo.netIncome}`);
-    console.log(`Super : ${payslipInfo.super}`)
+    console.log(`Payment Month: ${payslipInfo.paymentMonth}`)
+    console.log(`Gross income: ${payslipInfo.grossIncome}`);
+    console.log(`Income tax: ${payslipInfo.incomeTax}`);
+    console.log(`Net income: ${payslipInfo.netIncome}`);
+    console.log(`Super: ${payslipInfo.super}`)
     console.log('------------------------------------')
     console.log('------------------------------------')
   }
